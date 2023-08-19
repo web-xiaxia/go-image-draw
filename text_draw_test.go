@@ -26,7 +26,7 @@ func TestDrawEmoji(t *testing.T) {
 	dc := NewTextDraw([]*truetype.Font{regularFont}, &truetype.Options{
 		Size: 80,
 	})
-	dc.DrawString(img, color.White, "draw multi font text and emoji 😊", 10, 85)
+	dc.DrawString(img, NewColorWitRGB255(85, 204, 48), "draw multi font text and emoji 😊", 10, 85)
 
 	file, err := os.Create("testDrawEmoji.png")
 	if err != nil {
