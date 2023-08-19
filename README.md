@@ -1,5 +1,6 @@
 # go-image-draw
-image draw string text and emoji
+
+image draw multi font string text and emoji
 ![](https://raw.githubusercontent.com/web-xiaxia/go-image-draw/master/image.png)
 
 ## Installation
