@@ -8,9 +8,9 @@ image draw string text and emoji
 
 ## Examples
 
-```go
+```
 dc := NewTextDraw([]*truetype.Font{font1, font2}, &truetype.Options{
-Size: 80,
+    Size: 80,
 })
 dc.DrawString(img, color.White, "draw multi font text and emoji 😊", 10, 85)
 ```
