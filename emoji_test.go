@@ -5,7 +5,7 @@ import (
 )
 
 func TestInitEmojiImageMap(t *testing.T) {
-	err := InitEmojiImageMap(false)
+	err := initEmojiImageMap(false)
 	if err != nil {
 		t.Error(err)
 	}

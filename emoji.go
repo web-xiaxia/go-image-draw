@@ -17,10 +17,10 @@ var emojiJson []byte
 var ImageMap map[string]image.Image
 
 func init() {
-	_ = InitEmojiImageMap(true)
+	_ = initEmojiImageMap(true)
 }
 
-func InitEmojiImageMap(errContinue bool) error {
+func initEmojiImageMap(errContinue bool) error {
 	emojiJsonReader, err := gzip.NewReader(bytes.NewBuffer(emojiJson))
 	if err != nil {
 		return err
