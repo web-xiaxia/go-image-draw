@@ -2,12 +2,14 @@ package go_image_draw
 
 import (
 	"bytes"
+	"compress/gzip"
 	_ "embed"
 	"encoding/base64"
 	"encoding/json"
 	"errors"
 	"fmt"
 	"image"
+	"io"
 )
 
 //go:embed emoji.json
@@ -19,8 +21,17 @@ func init() {
 }
 
 func InitEmojiImageMap(errContinue bool) error {
+	emojiJsonReader, err := gzip.NewReader(bytes.NewBuffer(emojiJson))
+	if err != nil {
+		return err
+	}
+	emojiJson2, err := io.ReadAll(emojiJsonReader)
+	if err != nil {
+		return err
+	}
+
 	var emojiImageBase64Map map[string]string
-	if err := json.Unmarshal(emojiJson, &emojiImageBase64Map); err != nil {
+	if err := json.Unmarshal(emojiJson2, &emojiImageBase64Map); err != nil {
 		return errors.New("json unmarshal err")
 	}
 
