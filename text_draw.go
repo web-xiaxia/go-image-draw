@@ -1,6 +1,7 @@
 package go_image_draw
 
 import (
+	"github.com/fogleman/gg"
 	"github.com/golang/freetype/truetype"
 	"image/color"
 	"image/draw"
@@ -37,4 +38,15 @@ type TextDraw interface {
 	// and then draws it at the specified anchor point using the given line
 	// spacing and text alignment.
 	DrawStringWrapped(im draw.Image, c color.Color, s string, x, y, ax, ay, width, lineSpacing float64, align Align)
+
+	// DrawStringToDC draws the specified text at the specified point.
+	DrawStringToDC(im *gg.Context, c color.Color, s string, x, y float64)
+	// DrawStringAnchoredToDC draws the specified text at the specified anchor point.
+	// The anchor point is x - w * ax, y - h * ay, where w, h is the size of the
+	// text. Use ax=0.5, ay=0.5 to center the text at the specified point.
+	DrawStringAnchoredToDC(im *gg.Context, c color.Color, s string, x, y, ax, ay float64)
+	// DrawStringWrappedToDC word-wraps the specified string to the given max width
+	// and then draws it at the specified anchor point using the given line
+	// spacing and text alignment.
+	DrawStringWrappedToDC(im *gg.Context, c color.Color, s string, x, y, ax, ay, width, lineSpacing float64, align Align)
 }

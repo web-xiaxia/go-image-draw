@@ -2,9 +2,12 @@ package go_image_draw
 
 import (
 	splitter "github.com/SubLuLu/grapheme-splitter"
+	"github.com/fogleman/gg"
 	"github.com/golang/freetype/truetype"
 	"golang.org/x/image/font"
 	"golang.org/x/image/math/fixed"
+	"image/color"
+	"image/draw"
 	"math"
 	"strings"
 )
@@ -174,4 +177,16 @@ func (f *textDraw) WordWrap(s string, width float64) []string {
 		result[i] = strings.TrimSpace(line)
 	}
 	return result
+}
+
+func (f *textDraw) DrawStringToDC(im *gg.Context, c color.Color, s string, x, y float64) {
+	f.DrawString(im.Image().(draw.Image), c, s, x, y)
+}
+
+func (f *textDraw) DrawStringAnchoredToDC(im *gg.Context, c color.Color, s string, x, y, ax, ay float64) {
+	f.DrawStringAnchored(im.Image().(draw.Image), c, s, x, y, ax, ay)
+}
+
+func (f *textDraw) DrawStringWrappedToDC(im *gg.Context, c color.Color, s string, x, y, ax, ay, width, lineSpacing float64, align Align) {
+	f.DrawStringWrapped(im.Image().(draw.Image), c, s, x, y, ax, ay, width, lineSpacing, align)
 }
