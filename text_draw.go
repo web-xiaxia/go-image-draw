@@ -37,7 +37,7 @@ type TextDraw interface {
 	// DrawStringWrapped word-wraps the specified string to the given max width
 	// and then draws it at the specified anchor point using the given line
 	// spacing and text alignment.
-	DrawStringWrapped(im draw.Image, c color.Color, s string, x, y, ax, ay, width, lineSpacing float64, align Align)
+	DrawStringWrapped(im draw.Image, c color.Color, s string, x, y, ax, ay, width, lineSpacing float64, align Align) float64
 
 	// DrawStringToDC draws the specified text at the specified point.
 	DrawStringToDC(im *gg.Context, c color.Color, s string, x, y float64)
@@ -48,5 +48,5 @@ type TextDraw interface {
 	// DrawStringWrappedToDC word-wraps the specified string to the given max width
 	// and then draws it at the specified anchor point using the given line
 	// spacing and text alignment.
-	DrawStringWrappedToDC(im *gg.Context, c color.Color, s string, x, y, ax, ay, width, lineSpacing float64, align Align)
+	DrawStringWrappedToDC(im *gg.Context, c color.Color, s string, x, y, ax, ay, width, lineSpacing float64, align Align) float64
 }

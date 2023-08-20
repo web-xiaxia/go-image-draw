@@ -2,6 +2,7 @@ package go_image_draw
 
 import (
 	splitter "github.com/SubLuLu/grapheme-splitter"
+	"github.com/fogleman/gg"
 	"github.com/nfnt/resize"
 	draw2 "golang.org/x/image/draw"
 	"golang.org/x/image/math/f64"
@@ -25,7 +26,7 @@ func (f *textDraw) DrawStringAnchored(im draw.Image, c color.Color, s string, x,
 	y += ay * f.getHeight()
 	f.drawString(im, c, s, x, y)
 }
-func (f *textDraw) DrawStringWrapped(im draw.Image, c color.Color, s string, x, y, ax, ay, width, lineSpacing float64, align Align) {
+func (f *textDraw) DrawStringWrapped(im draw.Image, c color.Color, s string, x, y, ax, ay, width, lineSpacing float64, align Align) float64 {
 	lines := f.WordWrap(s, width)
 
 	// sync h formula with MeasureMultilineString
@@ -49,6 +50,19 @@ func (f *textDraw) DrawStringWrapped(im draw.Image, c color.Color, s string, x, 
 		f.DrawStringAnchored(im, c, line, x, y, ax, ay)
 		y += f.fontHeight * lineSpacing
 	}
+	return h
+}
+
+func (f *textDraw) DrawStringToDC(im *gg.Context, c color.Color, s string, x, y float64) {
+	f.DrawString(im.Image().(draw.Image), c, s, x, y)
+}
+
+func (f *textDraw) DrawStringAnchoredToDC(im *gg.Context, c color.Color, s string, x, y, ax, ay float64) {
+	f.DrawStringAnchored(im.Image().(draw.Image), c, s, x, y, ax, ay)
+}
+
+func (f *textDraw) DrawStringWrappedToDC(im *gg.Context, c color.Color, s string, x, y, ax, ay, width, lineSpacing float64, align Align) float64 {
+	return f.DrawStringWrapped(im.Image().(draw.Image), c, s, x, y, ax, ay, width, lineSpacing, align)
 }
 
 func (f *textDraw) faceGlyphEmoji(dot fixed.Point26_6, emojiImage image.Image) (
