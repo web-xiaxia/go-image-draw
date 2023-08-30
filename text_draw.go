@@ -24,6 +24,8 @@ func NewTextDraw(fs []*truetype.Font, opts *truetype.Options) TextDraw {
 type TextDraw interface {
 	// GetWidth returns the width of the text.
 	GetWidth(text string) float64
+	// GetHeight returns the height of the text.
+	GetHeight() float64
 	// GetTextWithWidth returns the text that fits in the specified width.
 	GetTextWithWidth(text string, width float64) string
 	// WordWrap  returns the text that fits in the specified width.

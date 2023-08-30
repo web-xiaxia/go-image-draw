@@ -85,6 +85,9 @@ func (f *textDraw) GetWidth(text string) float64 {
 	}
 	return nowWidth
 }
+func (f *textDraw) GetHeight() float64 {
+	return f.getHeight()
+}
 func (f *textDraw) getHeight() float64 {
 	return f.fontHeight
 }
