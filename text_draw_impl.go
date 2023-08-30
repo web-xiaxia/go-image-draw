@@ -73,6 +73,10 @@ func (f *textDraw) getWidthWithRune(r rune) float64 {
 	return f.halfSizeWith
 }
 
+func (f *textDraw) GetMetrics() font.Metrics {
+	return f.firstFace.Metrics()
+}
+
 func (f *textDraw) GetWidth(text string) float64 {
 	arr := splitter.Split(text)
 	nowWidth := float64(0)

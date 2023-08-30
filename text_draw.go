@@ -3,6 +3,7 @@ package go_image_draw
 import (
 	"github.com/fogleman/gg"
 	"github.com/golang/freetype/truetype"
+	"golang.org/x/image/font"
 	"image/color"
 	"image/draw"
 )
@@ -22,6 +23,8 @@ func NewTextDraw(fs []*truetype.Font, opts *truetype.Options) TextDraw {
 }
 
 type TextDraw interface {
+	// GetMetrics font.Metrics
+	GetMetrics() font.Metrics
 	// GetWidth returns the width of the text.
 	GetWidth(text string) float64
 	// GetHeight returns the height of the text.
