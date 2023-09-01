@@ -134,7 +134,7 @@ func (f *textDraw) getWidth(s string) float64 {
 		}
 		if isThisFont {
 			d := &font.Drawer{
-				Face: f.firstFace,
+				Face: info.Face,
 			}
 			a := d.MeasureString(s)
 			return float64(a >> 6)
