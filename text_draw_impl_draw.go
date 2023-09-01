@@ -94,6 +94,9 @@ func (f *textDraw) faceGlyph(dot fixed.Point26_6, ss rune) (
 		if !ok {
 			continue
 		}
+		if string(ss) == " " {
+			return
+		}
 		if dr.Dx() == 0 {
 			continue
 		}
