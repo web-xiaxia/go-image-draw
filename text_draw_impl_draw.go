@@ -84,11 +84,7 @@ func (f *textDraw) faceGlyphEmoji(dot fixed.Point26_6, emojiImage image.Image) (
 }
 func (f *textDraw) faceGlyph(dot fixed.Point26_6, ss rune) (
 	dr image.Rectangle, mask image.Image, maskp image.Point, advance fixed.Int26_6, ok bool) {
-	defer func() {
-		if p := recover(); p != nil {
-			//
-		}
-	}()
+	defer func() { _ = recover() }()
 	for _, ff := range f.faceInfoList {
 		dr, mask, maskp, advance, ok = ff.Face.Glyph(dot, ss)
 		if !ok {
@@ -105,7 +101,9 @@ func (f *textDraw) faceGlyph(dot fixed.Point26_6, ss rune) (
 		}
 		return
 	}
-
+	if len(f.faceInfoList) > 1 {
+		dr, mask, maskp, advance, ok = f.faceInfoList[0].Face.Glyph(dot, ss)
+	}
 	return
 }
 func (f *textDraw) drawString(im draw.Image, c color.Color, s string, x, y float64) {
