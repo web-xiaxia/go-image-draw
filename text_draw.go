@@ -31,8 +31,8 @@ type TextDraw interface {
 	GetHeight() float64
 	// GetTextWithWidth returns the text that fits in the specified width.
 	GetTextWithWidth(text string, width float64) string
-	// WordWrap  returns the text that fits in the specified width.
-	WordWrap(text string, width float64) []string
+	// TextWrap x
+	TextWrap(text string, width float64) []string
 	// DrawString draws the specified text at the specified point.
 	DrawString(im draw.Image, c color.Color, s string, x, y float64)
 	// DrawStringAnchored draws the specified text at the specified anchor point.

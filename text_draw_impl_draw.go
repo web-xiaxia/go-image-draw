@@ -27,7 +27,7 @@ func (f *textDraw) DrawStringAnchored(im draw.Image, c color.Color, s string, x,
 	f.drawString(im, c, s, x, y)
 }
 func (f *textDraw) DrawStringWrapped(im draw.Image, c color.Color, s string, x, y, ax, ay, width, lineSpacing float64, align Align) float64 {
-	lines := f.WordWrap(s, width)
+	lines := f.TextWrap(s, width)
 
 	// sync h formula with MeasureMultilineString
 	h := float64(len(lines)) * f.fontHeight * lineSpacing

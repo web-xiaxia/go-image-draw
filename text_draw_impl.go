@@ -154,10 +154,10 @@ func (f *textDraw) MeasureMultilineString(s string, lineSpacing float64) (width,
 	return width, height
 }
 
-func (f *textDraw) WordWrap(s string, width float64) []string {
+func (f *textDraw) TextWrap(s string, width float64) []string {
 	var result []string
 	for _, line := range strings.Split(s, "\n") {
-		if strings.TrimSpace(line) == "" {
+		if line == "" {
 			result = append(result, line)
 			continue
 		}
@@ -180,9 +180,6 @@ func (f *textDraw) WordWrap(s string, width float64) []string {
 		if x != "" {
 			result = append(result, x)
 		}
-	}
-	for i, line := range result {
-		result[i] = strings.TrimSpace(line)
 	}
 	return result
 }
