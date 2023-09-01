@@ -101,8 +101,11 @@ func (f *textDraw) faceGlyph(dot fixed.Point26_6, ss rune) (
 		}
 		return
 	}
-	if len(f.faceInfoList) > 1 {
-		dr, mask, maskp, advance, ok = f.faceInfoList[0].Face.Glyph(dot, ss)
+	for _, ff := range f.faceInfoList {
+		dr, mask, maskp, advance, ok = ff.Face.Glyph(dot, ss)
+		if ok {
+			return
+		}
 	}
 	return
 }
