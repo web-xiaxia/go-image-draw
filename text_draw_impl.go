@@ -32,9 +32,11 @@ func newTextDraw(fs []*truetype.Font, opts *truetype.Options) TextDraw {
 	}
 	fontFace := faceInfoList[0].Face
 	fontHeight := float64(fontFace.Metrics().Height) / 64
+	emojiBaseline := int(float64(fontFace.Metrics().Descent>>6) * 0.4444444444444)
 	return &textDraw{
 		firstFace:     fontFace,
 		faceInfoList:  faceInfoList,
+		emojiBaseline: emojiBaseline,
 		opts:          opts,
 		scale:         scale,
 		sizeWithScale: float64(scale) * 0.8,
@@ -54,6 +56,7 @@ var _ TextDraw = (*textDraw)(nil)
 type textDraw struct {
 	firstFace     font.Face
 	faceInfoList  []*FaceInfo
+	emojiBaseline int
 	opts          *truetype.Options
 	scale         fixed.Int26_6
 	sizeWithScale float64
