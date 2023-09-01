@@ -117,6 +117,8 @@ func (f *textDraw) drawString(im draw.Image, c color.Color, s string, x, y float
 	for _, ss := range arr {
 		if emojiImage, ok := ImageMap[ss]; ok {
 			dr, mask, maskp, advance := f.faceGlyphEmoji(dot, emojiImage)
+			xx := int(float64(f.firstFace.Metrics().Descent>>6) * 0.4444444444444)
+			maskp.Y -= xx
 			draw.Draw(im, dr, mask, maskp, draw.Over)
 
 			// fmt.Printf("%s:-> %d\n", string(ss), advance)
