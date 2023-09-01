@@ -176,23 +176,24 @@ func (f *textDraw) TextWrap(s string, width float64) []string {
 			continue
 		}
 		x := ""
-		xWith := float64(0)
+		xWidth := float64(0)
 		fields := splitter.Split(line)
 		for _, field := range fields {
-			xWith += f.GetWidth(field)
-			if xWith > width {
+			nWidth := f.GetWidth(field)
+			if xWidth+nWidth > width {
 				if x == "" {
 					result = append(result, field)
 					x = ""
-					xWith = 0
+					xWidth = 0
 					continue
 				} else {
 					result = append(result, x)
 					x = ""
-					xWith = 0
+					xWidth = 0
 				}
 			}
 			x += field
+			xWidth += nWidth
 		}
 		if x != "" {
 			result = append(result, x)
