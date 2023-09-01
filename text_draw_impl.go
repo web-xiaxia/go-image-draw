@@ -124,6 +124,22 @@ func (f *textDraw) GetTextWithWidth(text string, width float64) string {
 // MeasureString returns the rendered width and height of the specified text
 // given the current font face.
 func (f *textDraw) getWidth(s string) float64 {
+	for _, info := range f.faceInfoList {
+		isThisFont := true
+		for _, s2 := range s {
+			if info.Font.Index(s2) == 0 {
+				isThisFont = false
+				break
+			}
+		}
+		if isThisFont {
+			d := &font.Drawer{
+				Face: f.firstFace,
+			}
+			a := d.MeasureString(s)
+			return float64(a >> 6)
+		}
+	}
 	d := &font.Drawer{
 		Face: f.firstFace,
 	}
