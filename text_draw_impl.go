@@ -82,15 +82,15 @@ func (f *textDraw) GetMetrics() font.Metrics {
 
 func (f *textDraw) GetWidth(text string) float64 {
 	arr := splitter.Split(text)
-	nowWidth := float64(0)
+	nowWidth := fixed.Int26_6(0)
 	for _, r := range arr {
 		if _, ok := ImageMap[r]; ok {
-			nowWidth += f.sizeWith
+			nowWidth += fixed.Int26_6(int(f.sizeWith) >> 6)
 		} else {
 			nowWidth += f.getWidth(r)
 		}
 	}
-	return nowWidth
+	return float64(nowWidth >> 6)
 }
 func (f *textDraw) GetHeight() float64 {
 	return f.getHeight()
@@ -103,19 +103,21 @@ func (f *textDraw) GetTextWithWidth(text string, width float64) string {
 	if len(text) == 0 {
 		return ""
 	}
+	emojiWidth := fixed.Int26_6(int(f.sizeWith) << 6)
+	rrWidth := fixed.Int26_6(int(width) << 6)
 	arr := splitter.Split(text)
-	nowWidth := float64(0)
+	nowWidth := fixed.Int26_6(0)
 	ret := make([]string, 0, len(arr))
 	for _, r := range arr {
 		if _, ok := ImageMap[r]; ok {
-			nowWidth += f.sizeWith
-			if nowWidth > width {
+			nowWidth += emojiWidth
+			if nowWidth > rrWidth {
 				break
 			}
 			ret = append(ret, r)
 		} else {
 			nowWidth += f.getWidth(r)
-			if nowWidth > width {
+			if nowWidth > rrWidth {
 				break
 			}
 			ret = append(ret, r)
@@ -124,7 +126,7 @@ func (f *textDraw) GetTextWithWidth(text string, width float64) string {
 	return strings.Join(ret, "")
 }
 
-func (f *textDraw) getWidth(s string) float64 {
+func (f *textDraw) getWidth(s string) fixed.Int26_6 {
 	for _, info := range f.faceInfoList {
 		isThisFont := true
 		for _, s2 := range s {
@@ -138,14 +140,14 @@ func (f *textDraw) getWidth(s string) float64 {
 				Face: info.Face,
 			}
 			a := d.MeasureString(s)
-			return float64(a >> 6)
+			return a
 		}
 	}
 	d := &font.Drawer{
 		Face: f.firstFace,
 	}
 	a := d.MeasureString(s)
-	return float64(a >> 6)
+	return a
 }
 
 func (f *textDraw) MeasureMultilineString(s string, lineSpacing float64) (width, height float64) {
