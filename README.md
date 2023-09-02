@@ -18,5 +18,5 @@ dc.DrawString(img, color.White, "draw multi font text and emoji 😊", 10, 85)
 
 ## Reference code / Acknowledgement
 
-- [gg](https://github.com/fogleman/gg/): Go Graphics is a library for rendering 2D graphics in pure Go.
+- [fogleman/gg](https://github.com/fogleman/gg/): Go Graphics is a library for rendering 2D graphics in pure Go.
 - [emojis](https://emojis.wiki): Emojis.Wiki — Emoji Meanings Encyclopedia
