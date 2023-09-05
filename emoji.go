@@ -7,21 +7,20 @@ import (
 	"encoding/base64"
 	"encoding/json"
 	"errors"
-	"fmt"
 	"image"
 	"io"
 )
 
 //go:embed emoji.json
 var emojiJson []byte
-var ImageMap map[string]image.Image
+var emojiImageBase64Map map[string]string
 
 func init() {
 	_ = initEmojiImageMap(true)
 }
 
 func initEmojiImageMap(errContinue bool) error {
-	if len(ImageMap) > 0 {
+	if len(emojiImageBase64Map) > 0 {
 		return nil
 	}
 	emojiJsonReader, err := gzip.NewReader(bytes.NewBuffer(emojiJson))
@@ -33,29 +32,31 @@ func initEmojiImageMap(errContinue bool) error {
 		return err
 	}
 
-	var emojiImageBase64Map map[string]string
 	if err := json.Unmarshal(emojiJson2, &emojiImageBase64Map); err != nil {
 		return errors.New("json unmarshal err")
 	}
-
-	ImageMap = make(map[string]image.Image, len(emojiImageBase64Map))
-	for k, v := range emojiImageBase64Map {
-		decodeString, err := base64.StdEncoding.DecodeString(v)
-		if err != nil {
-			if errContinue {
-				continue
-			}
-			return errors.New(fmt.Sprintf("%s: base64 decode error, v：%s", k, v))
-		}
-		decode, _, err := image.Decode(bytes.NewBuffer(decodeString))
-		if err != nil {
-			if errContinue {
-				continue
-			}
-			return errors.New(fmt.Sprintf("%s: image decode error, v：%s", k, v))
-		}
-		ImageMap[k] = decode
-		//fmt.Println(k, len(k))
-	}
 	return nil
+}
+func IsEmoji(text string) bool {
+	if len(text) == 0 {
+		return false
+	}
+	if _, ok := emojiImageBase64Map[text]; ok {
+		return true
+	}
+	return false
+}
+
+func GetEmojiImage(text string) (image.Image, bool) {
+	if len(text) == 0 {
+		return nil, false
+	}
+	if emojiImageBase64, ok := emojiImageBase64Map[text]; ok {
+		if decodeString, err := base64.StdEncoding.DecodeString(emojiImageBase64); err == nil {
+			if decode, _, err := image.Decode(bytes.NewBuffer(decodeString)); err == nil {
+				return decode, true
+			}
+		}
+	}
+	return nil, false
 }

@@ -84,7 +84,7 @@ func (f *textDraw) GetWidth(text string) float64 {
 	arr := splitter.Split(text)
 	nowWidth := fixed.Int26_6(0)
 	for _, r := range arr {
-		if _, ok := ImageMap[r]; ok {
+		if IsEmoji(r) {
 			nowWidth += fixed.Int26_6(int(f.sizeWith) >> 6)
 		} else {
 			nowWidth += f.getWidth(r)
@@ -109,7 +109,7 @@ func (f *textDraw) GetTextWithWidth(text string, width float64) string {
 	nowWidth := fixed.Int26_6(0)
 	ret := make([]string, 0, len(arr))
 	for _, r := range arr {
-		if _, ok := ImageMap[r]; ok {
+		if IsEmoji(r) {
 			nowWidth += emojiWidth
 			if nowWidth > rrWidth {
 				break

@@ -115,7 +115,7 @@ func (f *textDraw) drawString(im draw.Image, c color.Color, s string, x, y float
 
 	arr := splitter.Split(s)
 	for _, ss := range arr {
-		if emojiImage, ok := ImageMap[ss]; ok {
+		if emojiImage, ok := GetEmojiImage(ss); ok {
 			dr, mask, maskp, advance := f.faceGlyphEmoji(dot, emojiImage)
 
 			maskp.Y -= f.emojiBaseline
