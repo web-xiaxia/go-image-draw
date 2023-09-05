@@ -21,6 +21,9 @@ func init() {
 }
 
 func initEmojiImageMap(errContinue bool) error {
+	if len(ImageMap) > 0 {
+		return nil
+	}
 	emojiJsonReader, err := gzip.NewReader(bytes.NewBuffer(emojiJson))
 	if err != nil {
 		return err
