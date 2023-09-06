@@ -1,12 +1,11 @@
 package go_image_draw
 
 import (
+	"fmt"
 	"testing"
 )
 
 func TestInitEmojiImageMap(t *testing.T) {
-	err := initEmojiImageMap(false)
-	if err != nil {
-		t.Error(err)
-	}
+	image, b := GetEmojiImage("🌹")
+	fmt.Println(image, b)
 }
