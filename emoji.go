@@ -37,7 +37,10 @@ func emojiSplit(s string, n int) [][]string {
 
 		end = match[0]
 		if match[1] != 0 {
-			strings = append(strings, []string{s[beg:end], ""})
+			xxStr := s[beg:end]
+			if len(xxStr) > 0 {
+				strings = append(strings, []string{xxStr, ""})
+			}
 			strings = append(strings, []string{s[match[0]:match[1]], "emoji"})
 		}
 		beg = match[1]
