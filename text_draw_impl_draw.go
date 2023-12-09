@@ -1,7 +1,6 @@
 package go_image_draw
 
 import (
-	splitter "github.com/SubLuLu/grapheme-splitter"
 	"github.com/fogleman/gg"
 	"github.com/nfnt/resize"
 	draw2 "golang.org/x/image/draw"
@@ -113,7 +112,7 @@ func (f *textDraw) drawString(im draw.Image, c color.Color, s string, x, y float
 	fontSrc := image.NewUniform(c)
 	dot := fixp(x, y)
 
-	arr := splitter.Split(s)
+	arr := StrSplit(s)
 	for _, ss := range arr {
 		if emojiImage, ok := GetEmojiImage(ss); ok {
 			dr, mask, maskp, advance := f.faceGlyphEmoji(dot, emojiImage)

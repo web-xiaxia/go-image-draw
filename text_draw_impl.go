@@ -1,7 +1,6 @@
 package go_image_draw
 
 import (
-	splitter "github.com/SubLuLu/grapheme-splitter"
 	"github.com/golang/freetype/truetype"
 	"golang.org/x/image/font"
 	"golang.org/x/image/math/fixed"
@@ -81,7 +80,7 @@ func (f *textDraw) GetMetrics() font.Metrics {
 }
 
 func (f *textDraw) GetWidth(text string) float64 {
-	arr := splitter.Split(text)
+	arr := StrSplit(text)
 	nowWidth := fixed.Int26_6(0)
 	for _, r := range arr {
 		if IsEmoji(r) {
@@ -105,7 +104,7 @@ func (f *textDraw) GetTextWithWidth(text string, width float64) string {
 	}
 	emojiWidth := fixed.Int26_6(int(f.sizeWith) << 6)
 	rrWidth := fixed.Int26_6(int(width) << 6)
-	arr := splitter.Split(text)
+	arr := StrSplit(text)
 	nowWidth := fixed.Int26_6(0)
 	ret := make([]string, 0, len(arr))
 	for _, r := range arr {
@@ -182,7 +181,7 @@ func (f *textDraw) TextWrap(s string, width float64) []string {
 		}
 		x := ""
 		xWidth := float64(0)
-		fields := splitter.Split(line)
+		fields := StrSplit(line)
 		for _, field := range fields {
 			nWidth := f.GetWidth(field)
 			if xWidth+nWidth > width {
