@@ -9,4 +9,4 @@ require (
 	golang.org/x/image v0.11.0
 )
 
-require github.com/fogleman/gg v1.3.0 // indirect
+require github.com/fogleman/gg v1.3.0
